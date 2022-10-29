@@ -3,17 +3,15 @@ from .playlist import Playlist
 from .tracks import fetch_tracks
 
 
-def create_playlist(starting_tracks = []):
+def create_playlist(starting_tracks=None):  # sourcery skip: avoid-builtin-shadow
+    if starting_tracks is None:
+        starting_tracks = []
     tracks_all = list(fetch_tracks())
     list = starting_tracks
     duration_seconds_remaining = 1800
 
     while duration_seconds_remaining > 0:
-        tracks_which_fit = [
-            track
-            for track in tracks_all
-            if track.duration_seconds < duration_seconds_remaining
-        ]
+        tracks_which_fit = [track for track in tracks_all if track.duration_seconds < duration_seconds_remaining]
 
         if not tracks_which_fit:
             break
